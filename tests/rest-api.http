@@ -13,16 +13,6 @@ GET {{base_url}}/healthcheck
 %}
 
 
-###  Get all accounts
-GET {{versioned}}/accounts
-
-> {%
-    client.test("All accounts can be retrieved", function () {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-
-
 ###  Get account by ID
 GET {{versioned}}/accounts/42
 
@@ -33,12 +23,51 @@ GET {{versioned}}/accounts/42
     });
 %}
 
-
 ###  Create account
 POST {{versioned}}/accounts/
 
 > {%
     client.test("An account can be created", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+
+###  Get customer by ID
+GET {{versioned}}/customers/42
+
+> {%
+    client.test("A customer can be retrieved by ID", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.customer_id === 42, "Customer ID is not 42");
+    });
+%}
+
+###  Create customer
+POST {{versioned}}/customers/
+
+> {%
+    client.test("A customer can be created", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+
+###  Get loan by ID
+GET {{versioned}}/loans/42
+
+> {%
+    client.test("A loan can be retrieved by ID", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.loan_id === 42, "Loan ID is not 42");
+    });
+%}
+
+###  Create loan
+POST {{versioned}}/loans/
+
+> {%
+    client.test("A loan can be created", function () {
         client.assert(response.status === 201, "Response status is not 201");
     });
 %}
