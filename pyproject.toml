@@ -17,6 +17,7 @@ packages = [{include = "bank_of_bill"}]
 
 [tool.poetry.dependencies]
 fastapi = {extras = ["standard"], version = "^0.115.6"}
+psycopg = {extras = ["binary"], version = "^3.2.4"}
 
 [tool.poetry.group]
 dev.optional = false
