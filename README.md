@@ -17,3 +17,19 @@
 # Bank of Bill
 
 A simple loan management system.
+
+## Quick start
+
+```
+poetry sync
+pre-commit install --install-hooks
+
+# Development
+fastapi dev bank_of_bill/main.py
+```
+
+## Acknowledgements
+
+Lots of bits have been "inspired by" (_cough_ stolen from _cough_) the following awesome template:
+
+- https://github.com/fastapi/full-stack-fastapi-template

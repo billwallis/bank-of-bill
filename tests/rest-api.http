@@ -1,0 +1,44 @@
+@base_url = http://127.0.0.1:8000
+@versioned = http://127.0.0.1:8000/api/v1
+
+
+###  Healthcheck
+GET {{base_url}}/healthcheck
+
+> {%
+    client.test("Server is healthy", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.status === "OK", "Response body is not OK");
+    });
+%}
+
+
+###  Get all accounts
+GET {{versioned}}/accounts
+
+> {%
+    client.test("All accounts can be retrieved", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+
+###  Get account by ID
+GET {{versioned}}/accounts/42
+
+> {%
+    client.test("An account can be retrieved by ID", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.account_id === 42, "Account ID is not 42");
+    });
+%}
+
+
+###  Create account
+POST {{versioned}}/accounts/
+
+> {%
+    client.test("An account can be created", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}

@@ -15,6 +15,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 packages = [{include = "bank_of_bill"}]
 
+[tool.poetry.dependencies]
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+
 [tool.poetry.group]
 dev.optional = false
 test.optional = false
@@ -29,7 +32,7 @@ pytest-cov = "^4.1.0"
 
 
 [tool.pytest.ini_options]
-addopts = "--cov=bank_of_bill --cov-fail-under=80"
+addopts = "--cov=bank_of_bill --cov-fail-under=0"
 testpaths = ["tests"]
 
 

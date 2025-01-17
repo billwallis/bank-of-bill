@@ -2,12 +2,15 @@
 Entry point into the package.
 """
 
+import fastapi
 
-def main() -> None:
-    """
-    Entry point into the module.
-    """
+from bank_of_bill import config
+from bank_of_bill.inbound import http
+
+app = fastapi.FastAPI()
+app.include_router(http.http_router, prefix=config.API_V1_PATH)
 
 
-if __name__ == "__main__":
-    main()  # pragma: no cover
+@app.get("/healthcheck")
+def root():
+    return {"status": "OK"}
