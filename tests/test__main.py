@@ -1,8 +1,8 @@
 """
-Unit tests for the ``src.main`` module.
+Unit tests for the ``bank_of_bill.main`` module.
 """
 
-from src import main
+from bank_of_bill import main
 
 
 def test__main():
