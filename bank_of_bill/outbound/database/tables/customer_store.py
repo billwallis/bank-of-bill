@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import datetime
 
-from bank_of_bill.outbound.database.crud import CRUDInterface, DatabaseCursor
+from bank_of_bill.outbound.database.model import DatabaseCursor
 
 
 @dataclasses.dataclass
@@ -24,16 +24,18 @@ class CustomerResource:
 
     @classmethod
     def from_result_set(cls, result_set: tuple) -> CustomerResource:
-        return CustomerResource(
-            customer_id=result_set[0],
-            forename=result_set[1],
-            surname=result_set[2],
-            date_of_birth=result_set[3],
-            postcode=result_set[4],
-        )
+        if result_set:
+            return CustomerResource(
+                customer_id=result_set[0],
+                forename=result_set[1],
+                surname=result_set[2],
+                date_of_birth=result_set[3],
+                postcode=result_set[4],
+            )
+        raise IndexError("Customer not found")
 
 
-class CustomerStore(CRUDInterface):
+class CustomerStore:
     def __init__(self, db_cursor: DatabaseCursor):
         self.db_cursor = db_cursor
 
@@ -59,6 +61,7 @@ class CustomerStore(CRUDInterface):
             select customer_id, forename, surname, date_of_birth, postcode
             from domain.customers
             where customer_id = %(customer_id)s
+              and not deleted
             """,
             {"customer_id": customer_id},
         )

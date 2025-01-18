@@ -1,19 +1,17 @@
-from bank_of_bill.outbound.database.migrate import (
-    migrate_down,
-    migrate_up,
-)
-from bank_of_bill.outbound.database.model import (
-    DatabaseConnection,
-    DatabaseCursor,
-)
-from bank_of_bill.outbound.database.tables import (
+from bank_of_bill.outbound.database.tables.account_customer_bridge_store import (
     AccountCustomerBridgeResource,
     AccountCustomerBridgeStore,
+)
+from bank_of_bill.outbound.database.tables.account_store import (
     AccountResource,
     AccountStore,
+)
+from bank_of_bill.outbound.database.tables.customer_store import (
     CustomerCreationData,
     CustomerResource,
     CustomerStore,
+)
+from bank_of_bill.outbound.database.tables.loan_store import (
     LoanCreationData,
     LoanResource,
     LoanStore,
@@ -27,11 +25,7 @@ __all__ = [
     "CustomerCreationData",
     "CustomerResource",
     "CustomerStore",
-    "DatabaseConnection",
-    "DatabaseCursor",
     "LoanCreationData",
     "LoanResource",
     "LoanStore",
-    "migrate_down",
-    "migrate_up",
 ]

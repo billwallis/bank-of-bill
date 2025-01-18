@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from bank_of_bill.outbound.database.crud import CRUDInterface, DatabaseCursor
+from bank_of_bill.outbound.database.model import DatabaseCursor
 
 
 @dataclasses.dataclass
@@ -16,11 +16,11 @@ class AccountResource:
         raise IndexError("Account not found")
 
 
-class AccountStore(CRUDInterface):
+class AccountStore:
     def __init__(self, db_cursor: DatabaseCursor):
         self.db_cursor = db_cursor
 
-    def create(self, _) -> AccountResource:
+    def create(self) -> AccountResource:
         self.db_cursor.execute(
             """
             insert into domain.accounts
@@ -42,7 +42,7 @@ class AccountStore(CRUDInterface):
         )
         return AccountResource.from_result_set(self.db_cursor.fetchone())
 
-    def update(self, _) -> None:
+    def update(self) -> None:
         raise NotImplementedError(
             "Update not implemented by design: account has no mutable public attributes"
         )
