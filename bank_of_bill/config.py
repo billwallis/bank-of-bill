@@ -14,6 +14,17 @@ class DBConfig:
     user: str
     password: str
 
+    @classmethod
+    def test_db(cls):
+        # TODO: this is a lazy approach, make it better
+        return cls(
+            host="localhost",
+            port=5433,
+            database="test_db",
+            user="test_db",
+            password="test_db",
+        )
+
     @property
     def dsn(self) -> str:
         return " ".join(

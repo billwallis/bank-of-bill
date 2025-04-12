@@ -12,23 +12,23 @@ GET {{base_url}}/healthcheck
     });
 %}
 
-
-###  Get account by ID
-GET {{versioned}}/accounts/42
-
-> {%
-    client.test("An account can be retrieved by ID", function () {
-        client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body.account_id === 42, "Account ID is not 42");
-    });
-%}
-
 ###  Create account
 POST {{versioned}}/accounts/
 
 > {%
     client.test("An account can be created", function () {
         client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+
+###  Get account by ID
+GET {{versioned}}/accounts/1
+
+> {%
+    client.test("An account can be retrieved by ID", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.account_id === 1, "Account ID is not 1");
     });
 %}
 
