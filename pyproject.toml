@@ -2,7 +2,7 @@
 name = "bank-of-bill"
 version = "0.0.0"
 description = ""
-authors = [{name = "Bilbottom"}]
+authors = [{name = "billwallis"}]
 readme = "README.md"
 requires-python = ">=3.11"
 dynamic = ["dependencies"]
