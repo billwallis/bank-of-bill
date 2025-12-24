@@ -1,7 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/pre-commit-config.json
 ---
 ci:
   autoupdate_schedule: quarterly
-  skip: ["identity", "poetry-lock", "pytest", "coverage-badge"]
+  skip: ["identity", "uv-lock", "pytest", "coverage-badge"]
+
+default_install_hook_types: ["pre-commit", "pre-push"]
+default_stages: ["pre-commit"]
 
 repos:
   - repo: meta
@@ -9,7 +13,7 @@ repos:
       - id: identity
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: no-commit-to-branch
         name: Don't allow commits to the main branch
@@ -30,43 +34,54 @@ repos:
         name: Check TOML files are valid and parseable
       - id: check-ast
         name: Validate Python
+      - id: detect-private-key
+        name: Check for the existence of private keys
 
-  - repo: https://github.com/python-poetry/poetry
-    rev: 2.1.3
+  - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+    rev: v1.6.1
     hooks:
-      - id: poetry-check
-        name: Check that the Poetry configuration is valid
-      - id: poetry-lock
+      - id: check-pre-commit-ci-config
+        name: Validate pre-commit CI config
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.8.23
+    hooks:
+      - id: uv-lock
         name: Check that the lock file is up-to-date
 
-  # Formatting
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
-    hooks:
-      - id: prettier
-        name: Make code pretty
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.2
+    rev: v0.13.3
     hooks:
-      - id: ruff
+      - id: ruff-check
         name: Lint Python code
         args: ["--fix"]
       - id: ruff-format
         name: Format Python code
 
-  # Testing and coverage
+  - repo: https://github.com/billwallis/bills-hooks
+    rev: v0.0.6
+    hooks:
+      - id: tidy-gitkeep
+        name: Remove redundant .gitkeep files
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.35.0
+    hooks:
+      - id: check-github-workflows
+
   - repo: local
     hooks:
       - id: pytest
         name: Run unit tests
-        entry: pytest tests --quiet
+        entry: uv run pytest tests --quiet
+        stages: ["pre-push"]
         language: system
         pass_filenames: false
         always_run: true
       - id: coverage-badge
         name: Generate coverage badge
-        entry: coverage-badge -o coverage.svg -f
+        entry: uv run coverage-badge -o coverage.svg -f
+        stages: ["pre-push"]
         language: system
         pass_filenames: false
         always_run: true

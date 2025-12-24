@@ -9,22 +9,17 @@ on:
 
 jobs:
   tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 🛎️ Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: 📦 Set up Poetry
-        run: pipx install poetry==2.0.0
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11
-          cache: poetry
+      - name: 📦 Set up uv
+        uses: astral-sh/setup-uv@v7
+        with: { enable-cache: true }
 
       - name: 🔨 Install dependencies
-        run: poetry install --without dev
+        run: uv sync --no-default-groups --group test
 
       - name: ✅ Run unit tests
-        run: poetry run pytest -vvv
+        run: uv run pytest -vvv
