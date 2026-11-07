@@ -1,7 +1,6 @@
 <span align="center">
 
 [![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)](https://www.python.org/downloads/)
-[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![tests](https://github.com/billwallis/bank-of-bill/actions/workflows/tests.yaml/badge.svg)](https://github.com/billwallis/bank-of-bill/actions/workflows/tests.yaml)
 [![coverage](https://raw.githubusercontent.com/billwallis/bank-of-bill/refs/heads/main/coverage.svg)](https://smarie.github.io/python-genbadge/)
 
@@ -15,3 +14,12 @@
 # Bank of Bill
 
 A simple loan management system.
+
+## Contributing
+
+Install the dependencies:
+
+```shell
+pip install --editable . --group dev --group test
+pre-commit install --install-hooks
+```
